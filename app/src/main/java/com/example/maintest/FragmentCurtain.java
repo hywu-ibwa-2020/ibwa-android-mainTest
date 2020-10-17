@@ -23,7 +23,7 @@ public class FragmentCurtain extends Fragment {
     Button lightbar_btn;
     ImageButton curtainUp;
     ImageButton curtainDown;
-    ToggleButton curtain1, curtain2, curtain1_1;
+    ToggleButton curtain1, curtain2, curtain1_1, curtain2_1;
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View curtain_view =  inflater.inflate(R.layout.fragment_curtain, container, false);
 
@@ -69,8 +69,9 @@ public class FragmentCurtain extends Fragment {
         curtainUp = (ImageButton) curtain_view.findViewById(R.id.curtainUp);
         curtainDown = (ImageButton) curtain_view.findViewById(R.id.curtainDown);
         curtain1 = (ToggleButton) curtain_view.findViewById(R.id.curtain1);
-        curtain1_1 = (ToggleButton) curtain_view.findViewById(R.id.curtain1_1);
         curtain2 = (ToggleButton) curtain_view.findViewById(R.id.curtain2);
+        curtain1_1 = (ToggleButton) curtain_view.findViewById(R.id.curtain1_1);
+        curtain2_1 = (ToggleButton) curtain_view.findViewById(R.id.curtain2_1);
         // 컬러바
         lightbar_btn = (Button) curtain_view.findViewById(R.id.lightBar);
 
@@ -84,7 +85,7 @@ public class FragmentCurtain extends Fragment {
 
 //                Toast.makeText(getActivity(), "curtain1: " + curtain1.getHeight()
 //                        + "curtain2: " + curtain2.getHeight(), Toast.LENGTH_SHORT).show();
-                if (curtain1_1.isChecked() && !curtain2.isChecked()){
+                if (curtain1_1.isChecked() && !curtain2_1.isChecked()){
                     if (curtain1.getHeight() == 1400){
                         params.height = 100;
                         curtain1.setLayoutParams(params);
@@ -93,7 +94,7 @@ public class FragmentCurtain extends Fragment {
                     }else{
                         Toast.makeText(getActivity(), "커튼1이 이미 올라갔습니다.", Toast.LENGTH_SHORT).show();
                     }
-                } else if (curtain2.isChecked() && !curtain1.isChecked()){
+                } else if (curtain2_1.isChecked() && !curtain1_1.isChecked()){
                     if (curtain2.getHeight() == 1400){
                         params2.height = 100;
                         curtain2.setLayoutParams(params2);
@@ -101,7 +102,7 @@ public class FragmentCurtain extends Fragment {
                     }else{
                         Toast.makeText(getActivity(), "커튼2가 이미 올라갔습니다.", Toast.LENGTH_SHORT).show();
                     }
-                } else if (curtain2.isChecked() && curtain1.isChecked()){
+                } else if (curtain2_1.isChecked() && curtain1_1.isChecked()){
                     params.height = 100;
                     curtain1.setLayoutParams(params);
                     params2.height = 100;
@@ -125,7 +126,7 @@ public class FragmentCurtain extends Fragment {
 
 //                Toast.makeText(getActivity(), "curtain1: " + curtain1.getHeight()
 //                        + "curtain2: " + curtain2.getHeight(), Toast.LENGTH_SHORT).show();
-                if (curtain1_1.isChecked() && !curtain2.isChecked()){
+                if (curtain1_1.isChecked() && !curtain2_1.isChecked()){
                     if (curtain1.getHeight() == 100){
                         params.height = 1400;
                         curtain1.setLayoutParams(params);
@@ -134,7 +135,7 @@ public class FragmentCurtain extends Fragment {
                     }else{
                         Toast.makeText(getActivity(), "커튼1이 이미 내려갔습니다.", Toast.LENGTH_SHORT).show();
                     }
-                } else if (curtain2.isChecked() && !curtain1.isChecked()){
+                } else if (curtain2_1.isChecked() && !curtain1_1.isChecked()){
                     if (curtain2.getHeight() == 100){
                         params2.height = 1400;
                         curtain2.setLayoutParams(params2);
@@ -142,7 +143,7 @@ public class FragmentCurtain extends Fragment {
                     }else{
                         Toast.makeText(getActivity(), "커튼2가 이미 내려갔습니다.", Toast.LENGTH_SHORT).show();
                     }
-                } else if (curtain2.isChecked() && curtain1.isChecked()){
+                } else if (curtain2_1.isChecked() && curtain1_1.isChecked()){
                     params.height = 1400;
                     curtain1.setLayoutParams(params);
                     params2.height = 1400;

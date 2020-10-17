@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -22,7 +23,7 @@ public class FragmentCurtain extends Fragment {
     Button lightbar_btn;
     ImageButton curtainUp;
     ImageButton curtainDown;
-    ToggleButton curtain1, curtain2;
+    ToggleButton curtain1, curtain2, curtain1_1;
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View curtain_view =  inflater.inflate(R.layout.fragment_curtain, container, false);
 
@@ -46,7 +47,7 @@ public class FragmentCurtain extends Fragment {
             @Override
             public void onClick(View v) { // 전원버튼 클릭시
                 Button lightBar_btn = (Button) curtain_view.findViewById(R.id.lightBar);
-                if (lightBar_btn.isClickable()==false){ // 조명바 버튼이 꺼져있다면
+                if (!lightBar_btn.isClickable()){ // 조명바 버튼이 꺼져있다면
                     lightBar_btn.setClickable(true);
                     lightPower_btn.setBackgroundResource(R.drawable.ic_baseline_power_settings_red_24);}
                 else { // 조명바 버튼이 켜져있다면
@@ -68,6 +69,7 @@ public class FragmentCurtain extends Fragment {
         curtainUp = (ImageButton) curtain_view.findViewById(R.id.curtainUp);
         curtainDown = (ImageButton) curtain_view.findViewById(R.id.curtainDown);
         curtain1 = (ToggleButton) curtain_view.findViewById(R.id.curtain1);
+        curtain1_1 = (ToggleButton) curtain_view.findViewById(R.id.curtain1_1);
         curtain2 = (ToggleButton) curtain_view.findViewById(R.id.curtain2);
         // 컬러바
         lightbar_btn = (Button) curtain_view.findViewById(R.id.lightBar);
@@ -77,21 +79,27 @@ public class FragmentCurtain extends Fragment {
             @Override
             public void onClick(View view)
             {
-                if (curtain1.isChecked()==true && curtain2.isChecked()==false){
-                    if (curtain1.getHeight()==400){
-                        curtain1.setHeight(0);
+                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) curtain1.getLayoutParams();
+
+//                Toast.makeText(getActivity(), "curtain1: " + curtain1.getHeight()
+//                        + "curtain2: " + curtain2.getHeight(), Toast.LENGTH_SHORT).show();
+                if (curtain1_1.isChecked() && !curtain2.isChecked()){
+                    if (curtain1.getHeight() == 1400){
+                        params.height = 100;
+                        curtain1.setLayoutParams(params);
+//                        curtain1.setHeight(0);
                         Toast.makeText(getActivity(), "커튼1이 올라갑니다.", Toast.LENGTH_SHORT).show();
                     }else{
                         Toast.makeText(getActivity(), "커튼1이 이미 올라갔습니다.", Toast.LENGTH_SHORT).show();
                     }
-                } else if (curtain2.isChecked()==true && curtain1.isChecked()==false){
-                    if (curtain2.getHeight()==400){
+                } else if (curtain2.isChecked() && !curtain1.isChecked()){
+                    if (curtain2.getHeight() == 1400){
                         curtain2.setHeight(0);
                         Toast.makeText(getActivity(), "커튼2가 올라갑니다.", Toast.LENGTH_SHORT).show();
                     }else{
                         Toast.makeText(getActivity(), "커튼2가 이미 올라갔습니다.", Toast.LENGTH_SHORT).show();
                     }
-                } else if (curtain2.isChecked()==true && curtain1.isChecked()==true){
+                } else if (curtain2.isChecked() && curtain1.isChecked()){
                         curtain1.setHeight(0);
                         curtain2.setHeight(0);
                         Toast.makeText(getActivity(), "커튼1, 2가 올라갔습니다.", Toast.LENGTH_SHORT).show();

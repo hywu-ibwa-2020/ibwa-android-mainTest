@@ -50,18 +50,46 @@
 
         <ToggleButton
             android:id="@+id/curtain1"
+            android:textOn=""
+            android:textOff=""
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="400dp"
             android:layout_gravity="fill"
             android:background="@drawable/curtain1_toggle_selector" />
 
         <ToggleButton
             android:id="@+id/curtain2"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="400dp"
             android:layout_gravity="fill"
-            android:textColor="@color/mainTxt"
-            android:background="@drawable/curtain2_toggle_selector" />
+            android:background="@drawable/curtain2_toggle_selector"
+            android:textColor="@color/mainTxt" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal|top"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        <ToggleButton
+            android:id="@+id/curtain1_1"
+            android:layout_width="wrap_content"
+            android:layout_height="400dp"
+            android:layout_gravity="fill"
+            android:background="@drawable/curtain1_toggle_selector_copy"
+            android:textColor="@color/mainTxt" />
+
+        <ToggleButton
+            android:id="@+id/curtain2_1"
+            android:layout_width="wrap_content"
+            android:layout_height="400dp"
+            android:layout_gravity="fill"
+            android:background="@drawable/curtain2_toggle_selector"
+            android:textColor="@color/mainTxt" />
     </LinearLayout>
 
     <LinearLayout

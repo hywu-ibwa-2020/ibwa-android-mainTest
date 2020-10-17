@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:drawable="@drawable/curtain1_btn_copy"
+        android:drawable="@drawable/curtain2_toggle_on_fg"
         android:state_checked="true" />
     <item
-        android:drawable="@drawable/curtain1_toggle_off_copy"
+        android:drawable="@drawable/curtain2_toggle_off_fg"
         android:state_checked="false" />
 </selector>

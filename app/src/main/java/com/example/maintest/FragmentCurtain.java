@@ -80,6 +80,7 @@ public class FragmentCurtain extends Fragment {
             public void onClick(View view)
             {
                 LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) curtain1.getLayoutParams();
+                LinearLayout.LayoutParams params2 = (LinearLayout.LayoutParams) curtain2.getLayoutParams();
 
 //                Toast.makeText(getActivity(), "curtain1: " + curtain1.getHeight()
 //                        + "curtain2: " + curtain2.getHeight(), Toast.LENGTH_SHORT).show();
@@ -94,15 +95,18 @@ public class FragmentCurtain extends Fragment {
                     }
                 } else if (curtain2.isChecked() && !curtain1.isChecked()){
                     if (curtain2.getHeight() == 1400){
-                        curtain2.setHeight(0);
+                        params2.height = 100;
+                        curtain2.setLayoutParams(params2);
                         Toast.makeText(getActivity(), "커튼2가 올라갑니다.", Toast.LENGTH_SHORT).show();
                     }else{
                         Toast.makeText(getActivity(), "커튼2가 이미 올라갔습니다.", Toast.LENGTH_SHORT).show();
                     }
                 } else if (curtain2.isChecked() && curtain1.isChecked()){
-                        curtain1.setHeight(0);
-                        curtain2.setHeight(0);
-                        Toast.makeText(getActivity(), "커튼1, 2가 올라갔습니다.", Toast.LENGTH_SHORT).show();
+                    params.height = 100;
+                    curtain1.setLayoutParams(params);
+                    params2.height = 100;
+                    curtain2.setLayoutParams(params2);
+                    Toast.makeText(getActivity(), "커튼1, 2가 올라갔습니다.", Toast.LENGTH_SHORT).show();
                 } else
                     Toast.makeText(getActivity(), "활성화된 커튼이 없습니다. 커튼을 활성화 시켜주세요.", Toast.LENGTH_SHORT).show();
 
@@ -116,7 +120,36 @@ public class FragmentCurtain extends Fragment {
             @Override
             public void onClick(View view)
             {
-                Toast.makeText(getActivity(), "오른쪽 화살표가 눌렸습니다.", Toast.LENGTH_SHORT).show();
+                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) curtain1.getLayoutParams();
+                LinearLayout.LayoutParams params2 = (LinearLayout.LayoutParams) curtain2.getLayoutParams();
+
+//                Toast.makeText(getActivity(), "curtain1: " + curtain1.getHeight()
+//                        + "curtain2: " + curtain2.getHeight(), Toast.LENGTH_SHORT).show();
+                if (curtain1_1.isChecked() && !curtain2.isChecked()){
+                    if (curtain1.getHeight() == 100){
+                        params.height = 1400;
+                        curtain1.setLayoutParams(params);
+//                        curtain1.setHeight(0);
+                        Toast.makeText(getActivity(), "커튼1이 내려갑니다.", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(getActivity(), "커튼1이 이미 내려갔습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                } else if (curtain2.isChecked() && !curtain1.isChecked()){
+                    if (curtain2.getHeight() == 100){
+                        params2.height = 1400;
+                        curtain2.setLayoutParams(params2);
+                        Toast.makeText(getActivity(), "커튼2가 내려갑니다.", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(getActivity(), "커튼2가 이미 내려갔습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                } else if (curtain2.isChecked() && curtain1.isChecked()){
+                    params.height = 1400;
+                    curtain1.setLayoutParams(params);
+                    params2.height = 1400;
+                    curtain2.setLayoutParams(params2);
+                    Toast.makeText(getActivity(), "커튼1, 2가 내려갔습니다.", Toast.LENGTH_SHORT).show();
+                } else
+                    Toast.makeText(getActivity(), "활성화된 커튼이 없습니다. 커튼을 활성화 시켜주세요.", Toast.LENGTH_SHORT).show();
             };
         });
 

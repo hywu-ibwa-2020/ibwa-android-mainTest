@@ -1,0 +1,49 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/mainY</item>           <!--하단바 선택되었을때 색상 결정(앱 대표 색상)-->
+        <item name="colorPrimaryDark">@color/mainP</item>       <!--상단바 색상 결정-->
+        <item name="colorAccent">@color/mainP</item>            <!--강조 색상-->
+        <item name="android:textColorPrimary">@color/subY</item><!--글자 색상-->
+        <!--타이틀바 삭제-->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <!--Picker color theme (오전오후)-->
+    <style name="AppTheme.Picker.ap" parent="Theme.AppCompat.Light.NoActionBar" >
+        <item name="android:textColorPrimary">@color/mainTxt</item>
+        <item name="android:textColorHighlight">@color/mainY</item>
+        <item name="android:textSize">36sp</item>
+        <item name="android:textColor">@color/mainTxt</item>
+        <item name="colorControlNormal">@color/transparent</item>
+    </style>
+    <!--Picker color theme (시, 분)-->
+    <style name="AppTheme.Picker" parent="Theme.AppCompat.Light.NoActionBar" >
+        <item name="android:textColorPrimary">@color/mainTxt</item>
+        <item name="android:textColorHighlight">@color/mainY</item>
+        <item name="android:textSize">48sp</item>
+        <item name="android:textColor">@color/mainTxt</item>
+        <item name="colorControlNormal">@color/transparent</item>
+    </style>
+    <!--커튼 높이 결정 넘버픽커-->
+    <style name="AppTheme.Picker.curtain" parent="Theme.AppCompat.Light.NoActionBar" >
+        <item name="android:textColorPrimary">@color/mainTxt</item>
+        <item name="android:textColorHighlight">@color/mainY</item>
+        <item name="android:textSize">48sp</item>
+        <item name="android:textColor">@color/mainTxt</item>
+        <item name="colorControlNormal">@color/transparent</item>
+    </style>
+
+    <!--요일 토글 버튼 theme 스타일로 하는 거 찾아보기!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+    <style name="AppTheme.Toggle"></style>
+
+    <!--스플래시-->
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash</item>
+    </style>
+
+
+</resources>

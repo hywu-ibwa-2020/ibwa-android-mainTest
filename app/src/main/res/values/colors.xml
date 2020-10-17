@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="mainP">#6a60a9</color>
+    <color name="subP">#dedcee</color>
+    <color name="subY">#fffcf0</color>
+    <color name="mainY">#fbd14b</color>
+    <color name="mainBg">#ffffff</color>
+    <color name="btnBorder">#989393</color>
+    <color name="mainTxt">#000000</color>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="switchOff">#BEBEBE</color>
+</resources>

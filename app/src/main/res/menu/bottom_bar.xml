@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/recommendItem"
+        android:icon="@drawable/brain_2"
+        android:title="맞춤 추천" />
+    <item
+        android:id="@+id/curtainItem"
+        android:icon="@drawable/blinds_2"
+        android:title="커튼" />
+    <item
+        android:id="@+id/timerItem"
+        android:icon="@drawable/timer_2"
+        android:title="타이머" />
+
+</menu>

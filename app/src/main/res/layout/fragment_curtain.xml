@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:paddingTop="26dp">
+        <ImageButton
+            android:id="@+id/btnConnect"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/bluetooth"
+            android:background="@drawable/light_power_btn"/>
+
+        <Button
+            android:id="@+id/lightBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/light_bar_btn" />
+
+        <ImageButton
+            android:id="@+id/lightPower"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:background="@drawable/light_power_btn"
+            android:src="@drawable/ic_power_settings_new_black_24dp"
+            android:contentDescription="TODO" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal|top"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        <Button
+            android:id="@+id/curtain1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="fill"
+            android:background="@drawable/curtain1_btn" />
+
+        <Button
+            android:id="@+id/curtain2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="fill"
+            android:background="@drawable/curtain2_btn" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+
+        app:layout_constraintVertical_bias="0.95">
+
+    <ImageButton
+            android:id="@+id/curtainUp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:background="@drawable/curtain_up_btn"
+            android:src="@drawable/triangle_up" />
+
+        <ImageView
+            android:id="@+id/lighting"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginLeft="64dp"
+            android:background="@drawable/lighting_red" />
+
+        <ImageButton
+            android:id="@+id/curtainDown"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginLeft="64dp"
+            android:background="@drawable/curtain_up_btn"
+            android:rotation="180"
+            android:src="@drawable/triangle_up" />
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

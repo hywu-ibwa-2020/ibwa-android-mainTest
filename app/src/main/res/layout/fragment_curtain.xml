@@ -48,19 +48,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
-        <Button
+        <ToggleButton
             android:id="@+id/curtain1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="fill"
-            android:background="@drawable/curtain1_btn" />
+            android:background="@drawable/curtain1_toggle_selector" />
 
-        <Button
+        <ToggleButton
             android:id="@+id/curtain2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="fill"
-            android:background="@drawable/curtain2_btn" />
+            android:textColor="@color/mainTxt"
+            android:background="@drawable/curtain2_toggle_selector" />
     </LinearLayout>
 
     <LinearLayout
@@ -75,7 +76,7 @@
 
         app:layout_constraintVertical_bias="0.95">
 
-    <ImageButton
+        <ImageButton
             android:id="@+id/curtainUp"
             android:layout_width="70dp"
             android:layout_height="70dp"

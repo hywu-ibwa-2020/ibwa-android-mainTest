@@ -2,6 +2,7 @@ package com.example.maintest;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,8 +20,14 @@ public class FragmentCurtain extends Fragment {
 
     ImageButton lightPower_btn;
     Button lightbar_btn;
+    ImageButton curtainUp;
+    ImageButton curtainDown;
+    ToggleButton curtain1, curtain2;
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View curtain_view =  inflater.inflate(R.layout.fragment_curtain, container, false);
+
+
+
 
         // 조도 상태 표시 기능
         int sun_state = 100; // 조도값으로 받아오는 값 저장
@@ -57,6 +65,58 @@ public class FragmentCurtain extends Fragment {
             }
         });
 
+        curtainUp = (ImageButton) curtain_view.findViewById(R.id.curtainUp);
+        curtainDown = (ImageButton) curtain_view.findViewById(R.id.curtainDown);
+        curtain1 = (ToggleButton) curtain_view.findViewById(R.id.curtain1);
+        curtain2 = (ToggleButton) curtain_view.findViewById(R.id.curtain2);
+        // 컬러바
+        lightbar_btn = (Button) curtain_view.findViewById(R.id.lightBar);
+
+        // 위쪽 화살표를 눌렀을때
+        curtainUp.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view)
+            {
+                if (curtain1.isChecked()==true && curtain2.isChecked()==false){
+                    if (curtain1.getHeight()==400){
+                        curtain1.setHeight(0);
+                        Toast.makeText(getActivity(), "커튼1이 올라갑니다.", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(getActivity(), "커튼1이 이미 올라갔습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                } else if (curtain2.isChecked()==true && curtain1.isChecked()==false){
+                    if (curtain2.getHeight()==400){
+                        curtain2.setHeight(0);
+                        Toast.makeText(getActivity(), "커튼2가 올라갑니다.", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(getActivity(), "커튼2가 이미 올라갔습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                } else if (curtain2.isChecked()==true && curtain1.isChecked()==true){
+                        curtain1.setHeight(0);
+                        curtain2.setHeight(0);
+                        Toast.makeText(getActivity(), "커튼1, 2가 올라갔습니다.", Toast.LENGTH_SHORT).show();
+                } else
+                    Toast.makeText(getActivity(), "활성화된 커튼이 없습니다. 커튼을 활성화 시켜주세요.", Toast.LENGTH_SHORT).show();
+
+            };
+        });
+
+
+
+        // 오른쪽 화살표를 눌렀을때
+        curtainDown.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view)
+            {
+                Toast.makeText(getActivity(), "오른쪽 화살표가 눌렸습니다.", Toast.LENGTH_SHORT).show();
+            };
+        });
+
+
+
         return curtain_view;
     }
+
+
+
 }

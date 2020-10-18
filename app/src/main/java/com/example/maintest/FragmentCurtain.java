@@ -1,5 +1,6 @@
 package com.example.maintest;
 
+import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -58,6 +59,20 @@ public class FragmentCurtain extends Fragment implements View.OnClickListener, C
         curtain_context = container.getContext();
         drawable = (GradientDrawable) ContextCompat.getDrawable(curtain_context, R.drawable.light_bar_btn);
 
+        // 블루투스 연결
+        bt = new BluetoothSPP(curtain_context); //Initializing
+
+        btnConnect = curtain_view.findViewById(R.id.btnConnect);
+        btnConnect.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (bt.getServiceState() == BluetoothState.STATE_CONNECTED) {
+                    bt.disconnect();
+                } else {
+                    Intent intent = new Intent(curtain_context, DeviceList.class);
+                    startActivityForResult(intent, BluetoothState.REQUEST_CONNECT_DEVICE);
+                }
+            }
+        });
 
 
         // 조도 상태 표시 기능
@@ -107,6 +122,7 @@ public class FragmentCurtain extends Fragment implements View.OnClickListener, C
                         curtain1.setLayoutParams(params);
 //                        curtain1.setHeight(0);
                         Toast.makeText(getActivity(), "커튼1이 올라갑니다.", Toast.LENGTH_SHORT).show();
+                        bt.send("커일업",true);
                     }else{
                         Toast.makeText(getActivity(), "커튼1이 이미 올라갔습니다.", Toast.LENGTH_SHORT).show();
                     }
@@ -115,6 +131,7 @@ public class FragmentCurtain extends Fragment implements View.OnClickListener, C
                         params2.height = 100;
                         curtain2.setLayoutParams(params2);
                         Toast.makeText(getActivity(), "커튼2가 올라갑니다.", Toast.LENGTH_SHORT).show();
+                        bt.send("커이업",true);
                     }else{
                         Toast.makeText(getActivity(), "커튼2가 이미 올라갔습니다.", Toast.LENGTH_SHORT).show();
                     }
@@ -124,6 +141,7 @@ public class FragmentCurtain extends Fragment implements View.OnClickListener, C
                     params2.height = 100;
                     curtain2.setLayoutParams(params2);
                     Toast.makeText(getActivity(), "커튼1, 2가 올라갔습니다.", Toast.LENGTH_SHORT).show();
+                    bt.send("커일이업",true );
                 } else
                     Toast.makeText(getActivity(), "활성화된 커튼이 없습니다. 커튼을 활성화 시켜주세요.", Toast.LENGTH_SHORT).show();
 
@@ -148,6 +166,7 @@ public class FragmentCurtain extends Fragment implements View.OnClickListener, C
                         curtain1.setLayoutParams(params);
 //                        curtain1.setHeight(0);
                         Toast.makeText(getActivity(), "커튼1이 내려갑니다.", Toast.LENGTH_SHORT).show();
+                        bt.send("커일단",true );
                     }else{
                         Toast.makeText(getActivity(), "커튼1이 이미 내려갔습니다.", Toast.LENGTH_SHORT).show();
                     }
@@ -156,6 +175,7 @@ public class FragmentCurtain extends Fragment implements View.OnClickListener, C
                         params2.height = 1400;
                         curtain2.setLayoutParams(params2);
                         Toast.makeText(getActivity(), "커튼2가 내려갑니다.", Toast.LENGTH_SHORT).show();
+                        bt.send("커이단",true );
                     }else{
                         Toast.makeText(getActivity(), "커튼2가 이미 내려갔습니다.", Toast.LENGTH_SHORT).show();
                     }
@@ -165,26 +185,11 @@ public class FragmentCurtain extends Fragment implements View.OnClickListener, C
                     params2.height = 1400;
                     curtain2.setLayoutParams(params2);
                     Toast.makeText(getActivity(), "커튼1, 2가 내려갔습니다.", Toast.LENGTH_SHORT).show();
+                    bt.send("커일이단",true );
                 } else
                     Toast.makeText(getActivity(), "활성화된 커튼이 없습니다. 커튼을 활성화 시켜주세요.", Toast.LENGTH_SHORT).show();
             };
         });
-
-        // 블루투스 연결
-        bt = new BluetoothSPP(curtain_context); //Initializing
-
-        btnConnect = curtain_view.findViewById(R.id.btnConnect);
-        btnConnect.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if (bt.getServiceState() == BluetoothState.STATE_CONNECTED) {
-                    bt.disconnect();
-                } else {
-                    Intent intent = new Intent(curtain_context, DeviceList.class);
-                    startActivityForResult(intent, BluetoothState.REQUEST_CONNECT_DEVICE);
-                }
-            }
-        });
-
 
 
         return curtain_view;
@@ -200,20 +205,39 @@ public class FragmentCurtain extends Fragment implements View.OnClickListener, C
 
     @Override
     public void colorChanged(int color) {
+        String colorString;
         PreferenceManager.getDefaultSharedPreferences(curtain_context).edit().putInt("color", color).commit();
 //        lightBar_btn.setBackgroundColor(color);
 //        ResourcesCompat.getDrawable(curtain_context.getResources(), color, null);
         drawable.setColor(color);
         lightBar_btn.setBackground(drawable);
-        toRGB(color);
+        colorString = toRGB(color);
+        Log.v("color: ", colorString);
+        bt.send(colorString, true);
     }
 
-    public void toRGB(int color) {
+    public String toRGB(int color) {
         int col = color;
         int red = col >>  16 & 0xff;
         int green = col >> 8 & 0xff;
         int blue = col  & 0xff;
         Log.d("DEBUG1",red+" / "+green+ " / " +blue);
+        return Integer.toString(red) + ","+ Integer.toString(green) + "," + Integer.toString(blue);
     }
+
+    public void onStart() {
+        super.onStart();
+        if (!bt.isBluetoothEnabled()) { //
+            Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(intent, BluetoothState.REQUEST_ENABLE_BT);
+        } else {
+            if (!bt.isServiceAvailable()) {
+                bt.setupService();
+                bt.startService(BluetoothState.DEVICE_OTHER); //DEVICE_ANDROID는 안드로이드 기기 끼리
+            }
+        }
+    }
+
+
 
 }

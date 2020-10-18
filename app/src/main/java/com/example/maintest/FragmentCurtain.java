@@ -1,5 +1,6 @@
 package com.example.maintest;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
@@ -62,6 +63,24 @@ public class FragmentCurtain extends Fragment implements View.OnClickListener, C
         // 블루투스 연결
         bt = new BluetoothSPP(curtain_context); //Initializing
 
+        bt.setBluetoothConnectionListener(new BluetoothSPP.BluetoothConnectionListener() { //연결됐을 때
+            public void onDeviceConnected(String name, String address) {
+                Toast.makeText(curtain_context
+                        , "Connected to " + name + "\n" + address
+                        , Toast.LENGTH_SHORT).show();
+            }
+
+            public void onDeviceDisconnected() { //연결해제
+                Toast.makeText(curtain_context
+                        , "Connection lost", Toast.LENGTH_SHORT).show();
+            }
+
+            public void onDeviceConnectionFailed() { //연결실패
+                Toast.makeText(curtain_context
+                        , "Unable to connect", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         btnConnect = curtain_view.findViewById(R.id.btnConnect);
         btnConnect.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -117,7 +136,7 @@ public class FragmentCurtain extends Fragment implements View.OnClickListener, C
 //                Toast.makeText(getActivity(), "curtain1: " + curtain1.getHeight()
 //                        + "curtain2: " + curtain2.getHeight(), Toast.LENGTH_SHORT).show();
                 if (curtain1_1.isChecked() && !curtain2_1.isChecked()){
-                    if (curtain1.getHeight() == 1400){
+                    if (curtain1.getHeight() == 1050){
                         params.height = 100;
                         curtain1.setLayoutParams(params);
 //                        curtain1.setHeight(0);
@@ -127,7 +146,7 @@ public class FragmentCurtain extends Fragment implements View.OnClickListener, C
                         Toast.makeText(getActivity(), "커튼1이 이미 올라갔습니다.", Toast.LENGTH_SHORT).show();
                     }
                 } else if (curtain2_1.isChecked() && !curtain1_1.isChecked()){
-                    if (curtain2.getHeight() == 1400){
+                    if (curtain2.getHeight() == 1050){
                         params2.height = 100;
                         curtain2.setLayoutParams(params2);
                         Toast.makeText(getActivity(), "커튼2가 올라갑니다.", Toast.LENGTH_SHORT).show();
@@ -162,7 +181,7 @@ public class FragmentCurtain extends Fragment implements View.OnClickListener, C
 //                        + "curtain2: " + curtain2.getHeight(), Toast.LENGTH_SHORT).show();
                 if (curtain1_1.isChecked() && !curtain2_1.isChecked()){
                     if (curtain1.getHeight() == 100){
-                        params.height = 1400;
+                        params.height = 1050;
                         curtain1.setLayoutParams(params);
 //                        curtain1.setHeight(0);
                         Toast.makeText(getActivity(), "커튼1이 내려갑니다.", Toast.LENGTH_SHORT).show();
@@ -172,7 +191,7 @@ public class FragmentCurtain extends Fragment implements View.OnClickListener, C
                     }
                 } else if (curtain2_1.isChecked() && !curtain1_1.isChecked()){
                     if (curtain2.getHeight() == 100){
-                        params2.height = 1400;
+                        params2.height = 1050;
                         curtain2.setLayoutParams(params2);
                         Toast.makeText(getActivity(), "커튼2가 내려갑니다.", Toast.LENGTH_SHORT).show();
                         bt.send("커이단",true );
@@ -180,9 +199,9 @@ public class FragmentCurtain extends Fragment implements View.OnClickListener, C
                         Toast.makeText(getActivity(), "커튼2가 이미 내려갔습니다.", Toast.LENGTH_SHORT).show();
                     }
                 } else if (curtain2_1.isChecked() && curtain1_1.isChecked()){
-                    params.height = 1400;
+                    params.height = 1050;
                     curtain1.setLayoutParams(params);
-                    params2.height = 1400;
+                    params2.height = 1050;
                     curtain2.setLayoutParams(params2);
                     Toast.makeText(getActivity(), "커튼1, 2가 내려갔습니다.", Toast.LENGTH_SHORT).show();
                     bt.send("커일이단",true );
@@ -222,7 +241,7 @@ public class FragmentCurtain extends Fragment implements View.OnClickListener, C
         int green = col >> 8 & 0xff;
         int blue = col  & 0xff;
         Log.d("DEBUG1",red+" / "+green+ " / " +blue);
-        return Integer.toString(red) + ","+ Integer.toString(green) + "," + Integer.toString(blue);
+        return Integer.toString(red) + " "+ Integer.toString(green) + " " + Integer.toString(blue);
     }
 
     public void onStart() {
@@ -237,6 +256,25 @@ public class FragmentCurtain extends Fragment implements View.OnClickListener, C
             }
         }
     }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == BluetoothState.REQUEST_CONNECT_DEVICE) {
+            if (resultCode == Activity.RESULT_OK)
+                bt.connect(data);
+        } else if (requestCode == BluetoothState.REQUEST_ENABLE_BT) {
+            if (resultCode == Activity.RESULT_OK) {
+                bt.setupService();
+                bt.startService(BluetoothState.DEVICE_OTHER);
+            } else {
+                Toast.makeText(curtain_context
+                        , "Bluetooth was not enabled."
+                        , Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+
 
 
 

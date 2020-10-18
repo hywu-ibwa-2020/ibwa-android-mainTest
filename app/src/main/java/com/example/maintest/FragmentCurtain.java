@@ -1,12 +1,11 @@
 package com.example.maintest;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -20,24 +19,30 @@ import android.widget.ToggleButton;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
+
+import app.akexorcist.bluetotohspp.library.BluetoothSPP;
+import app.akexorcist.bluetotohspp.library.BluetoothState;
+import app.akexorcist.bluetotohspp.library.DeviceList;
 
 public class FragmentCurtain extends Fragment implements View.OnClickListener, ColorPickerDialog.OnColorChangedListener{
 
     ToggleButton lightPower_btn;
     Button lightBar_btn;
     ImageButton curtainUp;
+    ImageButton lighting;
     ImageButton curtainDown;
+    ImageButton btnConnect;
     ToggleButton curtain1, curtain2, curtain1_1, curtain2_1;
     int color;
     Context curtain_context;
     GradientDrawable drawable;
 
+    private BluetoothSPP bt;
+
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View curtain_view =  inflater.inflate(R.layout.fragment_curtain, container, false);
-
 
         curtainUp = (ImageButton) curtain_view.findViewById(R.id.curtainUp);
         curtainDown = (ImageButton) curtain_view.findViewById(R.id.curtainDown);
@@ -56,7 +61,7 @@ public class FragmentCurtain extends Fragment implements View.OnClickListener, C
 
         // 조도 상태 표시 기능
         int sun_state = 100; // 조도값으로 받아오는 값 저장
-        ImageView lighting = (ImageView) curtain_view.findViewById(R.id.lighting);
+         lighting = (ImageButton) curtain_view.findViewById(R.id.lighting);
 
         if (sun_state >= 100 && sun_state < 300) //조도값이 100~300이면 좋음 값 출력
             lighting.setImageResource(R.drawable.lighting_blue);
@@ -81,16 +86,6 @@ public class FragmentCurtain extends Fragment implements View.OnClickListener, C
             }
         });
 
-        // 조명바 클릭시 컬러피커 오픈 (2번)
-//        lightBar_btn.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View v) { // 조명바 버튼 클릭시
-//                Toast.makeText(getActivity(), "컬러피커가 열립니다.", Toast.LENGTH_LONG).show();
-////                color = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this).getInt("color", Color.WHITE);
-////                new ColorPickerDialog(this, this, color).show();
-//                lightBar_btn.setBackgroundColor(color);
-//            }
-//        });
         lightBar_btn.setOnClickListener(this);
 
 
@@ -174,7 +169,20 @@ public class FragmentCurtain extends Fragment implements View.OnClickListener, C
             };
         });
 
-        //
+        // 블루투스 연결
+        bt = new BluetoothSPP(curtain_context); //Initializing
+
+        btnConnect = curtain_view.findViewById(R.id.btnConnect);
+        btnConnect.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (bt.getServiceState() == BluetoothState.STATE_CONNECTED) {
+                    bt.disconnect();
+                } else {
+                    Intent intent = new Intent(curtain_context, DeviceList.class);
+                    startActivityForResult(intent, BluetoothState.REQUEST_CONNECT_DEVICE);
+                }
+            }
+        });
 
 
 
@@ -198,4 +206,6 @@ public class FragmentCurtain extends Fragment implements View.OnClickListener, C
         lightBar_btn.setBackground(drawable);
 
     }
+
+
 }

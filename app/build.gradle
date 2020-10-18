@@ -33,5 +33,7 @@ dependencies {
 
     // androidx.preference.PreferenceManager.getDefaultSharedPreferences를 사용하기위해
     implementation 'androidx.preference:preference:1.1.1'
+    // 블루투스
+    implementation 'com.akexorcist:bluetoothspp:1.0.0'
 
 }

@@ -121,7 +121,7 @@
             android:background="@drawable/curtain_up_btn"
             android:src="@drawable/triangle_up" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/lighting"
             android:layout_width="70dp"
             android:layout_height="70dp"

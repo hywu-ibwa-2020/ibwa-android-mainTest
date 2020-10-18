@@ -27,15 +27,23 @@
             android:id="@+id/lightBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/light_bar_btn" />
+            android:background="@drawable/light_bar_btn"
+            android:enabled="false"/>
 
-        <ImageButton
+<!--        <ImageButton-->
+<!--            android:id="@+id/lightPower"-->
+<!--            android:layout_width="70dp"-->
+<!--            android:layout_height="70dp"-->
+<!--            android:background="@drawable/light_power_btn"-->
+<!--            android:src="@drawable/ic_power_settings_new_black_24dp"-->
+<!--            android:contentDescription="TODO" />-->
+        <ToggleButton
             android:id="@+id/lightPower"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:background="@drawable/light_power_btn"
-            android:src="@drawable/ic_power_settings_new_black_24dp"
-            android:contentDescription="TODO" />
+            android:background="@drawable/curtain_light_power_toggle_selector"
+            android:textOn=""
+            android:textOff=""/>
     </LinearLayout>
 
 

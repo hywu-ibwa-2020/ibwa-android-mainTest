@@ -1,8 +1,12 @@
 package com.example.maintest;
 
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -15,18 +19,38 @@ import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
 
-public class FragmentCurtain extends Fragment {
+public class FragmentCurtain extends Fragment implements View.OnClickListener, ColorPickerDialog.OnColorChangedListener{
 
-    ImageButton lightPower_btn;
-    Button lightbar_btn;
+    ToggleButton lightPower_btn;
+    Button lightBar_btn;
     ImageButton curtainUp;
     ImageButton curtainDown;
     ToggleButton curtain1, curtain2, curtain1_1, curtain2_1;
+    int color;
+    Context curtain_context;
+    GradientDrawable drawable;
+
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View curtain_view =  inflater.inflate(R.layout.fragment_curtain, container, false);
 
+
+        curtainUp = (ImageButton) curtain_view.findViewById(R.id.curtainUp);
+        curtainDown = (ImageButton) curtain_view.findViewById(R.id.curtainDown);
+        curtain1 = (ToggleButton) curtain_view.findViewById(R.id.curtain1);
+        curtain2 = (ToggleButton) curtain_view.findViewById(R.id.curtain2);
+        curtain1_1 = (ToggleButton) curtain_view.findViewById(R.id.curtain1_1);
+        curtain2_1 = (ToggleButton) curtain_view.findViewById(R.id.curtain2_1);
+
+        lightPower_btn = (ToggleButton) curtain_view.findViewById(R.id.lightPower);
+        lightBar_btn = (Button) curtain_view.findViewById(R.id.lightBar);
+
+        curtain_context = container.getContext();
+        drawable = (GradientDrawable) ContextCompat.getDrawable(curtain_context, R.drawable.light_bar_btn);
 
 
 
@@ -41,39 +65,35 @@ public class FragmentCurtain extends Fragment {
         else //조도값이 500초과이면 나쁨 값 출력
             lighting.setImageResource(R.drawable.lighting_red);
 
-//         조명바 온오프 설정 코드01
-        lightPower_btn = (ImageButton) curtain_view.findViewById(R.id.lightPower);
+//         조명바 온오프 설정 코드 (3번)
         lightPower_btn.setOnClickListener(new OnClickListener() {
             @Override
-            public void onClick(View v) { // 전원버튼 클릭시
-                Button lightBar_btn = (Button) curtain_view.findViewById(R.id.lightBar);
-                if (!lightBar_btn.isClickable()){ // 조명바 버튼이 꺼져있다면
-                    lightBar_btn.setClickable(true);
-                    lightPower_btn.setBackgroundResource(R.drawable.ic_baseline_power_settings_red_24);}
-                else { // 조명바 버튼이 켜져있다면
-                    lightBar_btn.setClickable(false);
+            public void onClick(View v) {        // 전원버튼 클릭시
+                if (lightPower_btn.isChecked()){         // 조명 전원 버튼이 켜져있다면
+                    lightBar_btn.setClickable(true);     // 조명 바 활성화
+                    lightBar_btn.setEnabled(true);
+
+                } else {                                  // 조명 전원 버튼이 꺼져있다면
+                    lightBar_btn.setClickable(false);   // 조명 바 비활성화
+                    lightBar_btn.setEnabled(false);
                 }
 
             }
         });
 
-        // 조명바 클릭시 컬러피커 오픈
-        lightbar_btn = (Button) curtain_view.findViewById(R.id.lightBar);
-        lightbar_btn.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) { // 조명바 버튼 클릭시
-                Toast.makeText(getActivity(), "컬러피커가 열립니다.", Toast.LENGTH_LONG).show();
-            }
-        });
+        // 조명바 클릭시 컬러피커 오픈 (2번)
+//        lightBar_btn.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) { // 조명바 버튼 클릭시
+//                Toast.makeText(getActivity(), "컬러피커가 열립니다.", Toast.LENGTH_LONG).show();
+////                color = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this).getInt("color", Color.WHITE);
+////                new ColorPickerDialog(this, this, color).show();
+//                lightBar_btn.setBackgroundColor(color);
+//            }
+//        });
+        lightBar_btn.setOnClickListener(this);
 
-        curtainUp = (ImageButton) curtain_view.findViewById(R.id.curtainUp);
-        curtainDown = (ImageButton) curtain_view.findViewById(R.id.curtainDown);
-        curtain1 = (ToggleButton) curtain_view.findViewById(R.id.curtain1);
-        curtain2 = (ToggleButton) curtain_view.findViewById(R.id.curtain2);
-        curtain1_1 = (ToggleButton) curtain_view.findViewById(R.id.curtain1_1);
-        curtain2_1 = (ToggleButton) curtain_view.findViewById(R.id.curtain2_1);
-        // 컬러바
-        lightbar_btn = (Button) curtain_view.findViewById(R.id.lightBar);
+
 
         // 위쪽 화살표를 눌렀을때
         curtainUp.setOnClickListener(new View.OnClickListener(){
@@ -154,11 +174,28 @@ public class FragmentCurtain extends Fragment {
             };
         });
 
+        //
+
 
 
         return curtain_view;
     }
 
 
+    @Override
+    public void onClick(View v) {
+        Toast.makeText(getActivity(), "컬러피커가 열립니다.", Toast.LENGTH_LONG).show();
+        color = androidx.preference.PreferenceManager.getDefaultSharedPreferences(curtain_context).getInt("color", Color.WHITE);
+        new ColorPickerDialog(curtain_context, this, color).show();
+    }
 
+    @Override
+    public void colorChanged(int color) {
+        PreferenceManager.getDefaultSharedPreferences(curtain_context).edit().putInt("color", color).commit();
+//        lightBar_btn.setBackgroundColor(color);
+//        ResourcesCompat.getDrawable(curtain_context.getResources(), color, null);
+        drawable.setColor(color);
+        lightBar_btn.setBackground(drawable);
+
+    }
 }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -204,8 +205,15 @@ public class FragmentCurtain extends Fragment implements View.OnClickListener, C
 //        ResourcesCompat.getDrawable(curtain_context.getResources(), color, null);
         drawable.setColor(color);
         lightBar_btn.setBackground(drawable);
-
+        toRGB(color);
     }
 
+    public void toRGB(int color) {
+        int col = color;
+        int red = col >>  16 & 0xff;
+        int green = col >> 8 & 0xff;
+        int blue = col  & 0xff;
+        Log.d("DEBUG1",red+" / "+green+ " / " +blue);
+    }
 
 }

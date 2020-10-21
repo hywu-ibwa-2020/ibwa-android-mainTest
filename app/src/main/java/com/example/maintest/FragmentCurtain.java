@@ -38,7 +38,7 @@ public class FragmentCurtain extends Fragment implements View.OnClickListener, C
     ImageButton curtainDown;
     ImageButton btnConnect;
     ToggleButton curtain1, curtain2, curtain1_1, curtain2_1;
-    int color;
+    int color, sun_state_int;
     Context curtain_context;
     GradientDrawable drawable;
 
@@ -98,12 +98,33 @@ public class FragmentCurtain extends Fragment implements View.OnClickListener, C
         int sun_state = 100; // 조도값으로 받아오는 값 저장
          lighting = (ImageButton) curtain_view.findViewById(R.id.lighting);
 
-        if (sun_state >= 100 && sun_state < 300) //조도값이 100~300이면 좋음 값 출력
-            lighting.setImageResource(R.drawable.lighting_blue);
-        else if (sun_state > 301 && sun_state < 500) //조도값이 301~500이면 보통 값 출력
-            lighting.setImageResource(R.drawable.lighting_green);
-        else //조도값이 500초과이면 나쁨 값 출력
-            lighting.setImageResource(R.drawable.lighting_red);
+//         lighting.setOnClickListener(new OnClickListener() {
+//             @Override
+//             public void onClick(View v) {
+//                 bt.setOnDataReceivedListener(new BluetoothSPP.OnDataReceivedListener() {
+//                     @Override
+//                     public void onDataReceived(byte[] data, String message) {
+//                        String[] array = message.split(",");
+//                        sun_state_int = Integer.parseInt(message);
+//                     }
+//                 });
+//             }
+//         });
+        bt.setOnDataReceivedListener(new BluetoothSPP.OnDataReceivedListener() {
+            @Override
+            public void onDataReceived(byte[] data, String message) {
+//                String[] array = message.split(",");
+                sun_state_int = Integer.parseInt(message);
+                Toast.makeText(getActivity(), sun_state_int+"가 온다...", Toast.LENGTH_SHORT).show();
+                if (sun_state_int >= 20 && sun_state_int < 180) //조도값이 100~300이면 좋음 값 출력
+                    lighting.setImageResource(R.drawable.lighting_blue);
+                else if (sun_state_int >= 180 && sun_state_int < 340) //조도값이 301~500이면 보통 값 출력
+                    lighting.setImageResource(R.drawable.lighting_green);
+                else //조도값이 500초과이면 나쁨 값 출력
+                    lighting.setImageResource(R.drawable.lighting_red);
+            }
+        });
+
 
 //         조명바 온오프 설정 코드 (3번)
         lightPower_btn.setOnClickListener(new OnClickListener() {
@@ -141,7 +162,7 @@ public class FragmentCurtain extends Fragment implements View.OnClickListener, C
                         curtain1.setLayoutParams(params);
 //                        curtain1.setHeight(0);
                         Toast.makeText(getActivity(), "커튼1이 올라갑니다.", Toast.LENGTH_SHORT).show();
-                        bt.send("커일업",true);
+                        bt.send("커일업\n",true);
                     }else{
                         Toast.makeText(getActivity(), "커튼1이 이미 올라갔습니다.", Toast.LENGTH_SHORT).show();
                     }
@@ -150,7 +171,7 @@ public class FragmentCurtain extends Fragment implements View.OnClickListener, C
                         params2.height = 100;
                         curtain2.setLayoutParams(params2);
                         Toast.makeText(getActivity(), "커튼2가 올라갑니다.", Toast.LENGTH_SHORT).show();
-                        bt.send("커이업",true);
+                        bt.send("커이업\n",true);
                     }else{
                         Toast.makeText(getActivity(), "커튼2가 이미 올라갔습니다.", Toast.LENGTH_SHORT).show();
                     }
@@ -160,7 +181,7 @@ public class FragmentCurtain extends Fragment implements View.OnClickListener, C
                     params2.height = 100;
                     curtain2.setLayoutParams(params2);
                     Toast.makeText(getActivity(), "커튼1, 2가 올라갔습니다.", Toast.LENGTH_SHORT).show();
-                    bt.send("커일이업",true );
+                    bt.send("커일이업\n",true );
                 } else
                     Toast.makeText(getActivity(), "활성화된 커튼이 없습니다. 커튼을 활성화 시켜주세요.", Toast.LENGTH_SHORT).show();
 
@@ -185,7 +206,7 @@ public class FragmentCurtain extends Fragment implements View.OnClickListener, C
                         curtain1.setLayoutParams(params);
 //                        curtain1.setHeight(0);
                         Toast.makeText(getActivity(), "커튼1이 내려갑니다.", Toast.LENGTH_SHORT).show();
-                        bt.send("커일단",true );
+                        bt.send("커일단\n",true );
                     }else{
                         Toast.makeText(getActivity(), "커튼1이 이미 내려갔습니다.", Toast.LENGTH_SHORT).show();
                     }
@@ -194,7 +215,7 @@ public class FragmentCurtain extends Fragment implements View.OnClickListener, C
                         params2.height = 1050;
                         curtain2.setLayoutParams(params2);
                         Toast.makeText(getActivity(), "커튼2가 내려갑니다.", Toast.LENGTH_SHORT).show();
-                        bt.send("커이단",true );
+                        bt.send("커이단\n",true );
                     }else{
                         Toast.makeText(getActivity(), "커튼2가 이미 내려갔습니다.", Toast.LENGTH_SHORT).show();
                     }
@@ -204,7 +225,7 @@ public class FragmentCurtain extends Fragment implements View.OnClickListener, C
                     params2.height = 1050;
                     curtain2.setLayoutParams(params2);
                     Toast.makeText(getActivity(), "커튼1, 2가 내려갔습니다.", Toast.LENGTH_SHORT).show();
-                    bt.send("커일이단",true );
+                    bt.send("커일이단\n",true );
                 } else
                     Toast.makeText(getActivity(), "활성화된 커튼이 없습니다. 커튼을 활성화 시켜주세요.", Toast.LENGTH_SHORT).show();
             };
